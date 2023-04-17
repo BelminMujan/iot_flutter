@@ -65,6 +65,18 @@ class _HomeState extends State<Home> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Welcome ${user.firstName} ${user.lastName}"),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.logout),
+              onPressed: () async {
+                await storage.delete(key: "token");
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Login()),
+                    (route) => false);
+              },
+            ),
+          ],
         ),
         body: SingleChildScrollView(
             child: Container(

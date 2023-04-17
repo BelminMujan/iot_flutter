@@ -23,9 +23,12 @@ class _App extends State<App> {
   void initState() {
     super.initState();
     isTokenValid().then((value) => {
+          if (value == true)
+            {print('User Logged in')}
+          else
+            {print('User Not logged in')},
           setState(() => {isLoggedIn = value}),
         });
-    print('User logged in');
   }
 
   @override
