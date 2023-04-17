@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class Room extends StatelessWidget {
   final double temperature;
-  final double width;
-  final double height;
+  final int xAxis;
+  final int yAxis;
 
   const Room({
     Key? key,
     required this.temperature,
-    required this.width,
-    required this.height,
+    required this.xAxis,
+    required this.yAxis,
   }) : super(key: key);
 
   static const List<Map<String, dynamic>> _colors = [
@@ -36,10 +36,10 @@ class Room extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final backgroundColor = _getBackgroundColor(temperature);
-
     return Container(
-      width: width,
-      height: height,
+      margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
+      width: xAxis * 1.0,
+      height: yAxis * 1.0,
       color: backgroundColor,
       child: Center(
         child: Text(

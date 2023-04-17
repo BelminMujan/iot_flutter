@@ -5,9 +5,10 @@ import 'package:http/http.dart' as http;
 import "package:flutter/material.dart";
 import "package:flutter_mobile/Widgets/Register.dart";
 
+import "../helper.dart";
+
 Future<void> login(context, email, password) async {
   print("Logging in...");
-  String? url = "http://192.168.0.16:5164";
   final response = await http.post(Uri.parse("$url/auth/login"),
       headers: {
         'Content-Type': 'application/json',
@@ -18,8 +19,6 @@ Future<void> login(context, email, password) async {
       }));
   final storage = FlutterSecureStorage();
   Map<String, dynamic> data = jsonDecode(response.body);
-  print(data['success']);
-
   if (data["success"] == true && data["token"] != null) {
     print("User logged in:");
     print(data);

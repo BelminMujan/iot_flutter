@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobile/Widgets/Home.dart';
 import 'package:flutter_mobile/Widgets/Login.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import 'helper.dart';
 
 Future<void> main() async {
   runApp(const App());
@@ -12,22 +13,6 @@ class App extends StatefulWidget {
 
   @override
   _App createState() => _App();
-}
-
-Future<bool> isTokenValid() async {
-  final storage = FlutterSecureStorage();
-  print("Verifying token...");
-  String? token = await storage.read(key: "token");
-  print(token);
-  if (token != null) {
-    bool isValid = true;
-    if (isValid) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-  return false;
 }
 
 class _App extends State<App> {
