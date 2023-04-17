@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobile/Widgets/Home.dart';
 import 'package:flutter_mobile/Widgets/Login.dart';
 
+import 'User.dart';
 import 'helper.dart';
 
 Future<void> main() async {
@@ -10,7 +11,6 @@ Future<void> main() async {
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
-
   @override
   _App createState() => _App();
 }
@@ -23,8 +23,9 @@ class _App extends State<App> {
   void initState() {
     super.initState();
     isTokenValid().then((value) => {
-          setState(() => {isLoggedIn = value})
+          setState(() => {isLoggedIn = value}),
         });
+    print('User logged in');
   }
 
   @override
@@ -33,7 +34,7 @@ class _App extends State<App> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: isLoggedIn ? const Home() : const Login(),
+      home: isLoggedIn ? Home() : const Login(),
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mobile/User.dart';
 import 'package:flutter_mobile/Widgets/Login.dart';
 import 'package:flutter_mobile/Widgets/Room.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -10,13 +10,15 @@ import 'package:http/http.dart' as http;
 import '../helper.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  const Home({Key? key}) : super(key: key);
+
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
   List<Widget> roomWidgets = [];
+  User user = User();
   final storage = FlutterSecureStorage();
   @override
   void initState() {
@@ -27,6 +29,8 @@ class _HomeState extends State<Home> {
             context,
             MaterialPageRoute(builder: (context) => const Login()),
             (route) => false);
+      } else {
+        getUser().then((value) => user = value);
       }
     });
     getRooms();
@@ -45,9 +49,11 @@ class _HomeState extends State<Home> {
 
       roomWidgets = roomList
           .map((room) => Room(
-              temperature: 20,
+              id: (room)['id'] as int,
               xAxis: (room)['xAxis'] as int,
-              yAxis: (room)['yAxis'] as int))
+              yAxis: (room)['yAxis'] as int,
+              hasSensor: (room)['hasSensor'] as bool,
+              sensorId: (room)['sensorId'] as String))
           .toList();
       setState(() {});
     }
@@ -58,7 +64,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Home"),
+          title: Text("Welcome ${user.firstName} ${user.lastName}"),
         ),
         body: SingleChildScrollView(
             child: Container(
@@ -71,30 +77,3 @@ class _HomeState extends State<Home> {
         )));
   }
 }
-
-// class RoomObject {
-//   int id;
-//   String title;
-//   int xAxis;
-//   int yAxis;
-//   bool hasSensor;
-//   String sensorId;
-
-//   RoomObject(
-//       {required this.id,
-//       required this.title,
-//       required this.xAxis,
-//       required this.yAxis,
-//       required this.hasSensor,
-//       required this.sensorId});
-
-//   factory RoomObject.fromJson(Map<String, dynamic> json) {
-//     return RoomObject(
-//         id: json['id'],
-//         title: json['title'],
-//         xAxis: json['xAxis'],
-//         yAxis: json['yAxis'],
-//         hasSensor: json['hasSensor'],
-//         sensorId: json['sensorId']);
-//   }
-// }
