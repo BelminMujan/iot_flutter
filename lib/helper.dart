@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 import 'User.dart';
 
-String? url = "http://192.168.0.16:5164";
+String? url = "http://192.168.0.18:5164";
 
 Future<bool> isTokenValid() async {
   final storage = FlutterSecureStorage();
@@ -14,8 +14,9 @@ Future<bool> isTokenValid() async {
   print(token);
 
   if (token != null) {
-    bool isValid = true;
-    if (isValid) {
+    User user = User();
+    getUser().then((u) => user = u);
+    if (user.id != null) {
       return true;
     } else {
       return false;

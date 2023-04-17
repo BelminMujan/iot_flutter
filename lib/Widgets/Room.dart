@@ -52,7 +52,7 @@ class _RoomState extends State<Room> {
 
   Future<void> _initSignalRConnection() async {
     try {
-      const serverUrl = "http://localhost:5164/temperatureHub";
+      const serverUrl = "http://192.168.0.18:5164/temperatureHub";
       final hubConnection = HubConnectionBuilder().withUrl(serverUrl).build();
       await hubConnection.start();
       print("SignalR connection started");
@@ -64,7 +64,7 @@ class _RoomState extends State<Room> {
             final Map<String, dynamic> data = value as Map<String, dynamic>;
             if (data['id'] as String == widget.sensorId as String) {
               Future.microtask(() => setState(() {
-                    _temperature = (data?['value'] as int).toDouble();
+                    _temperature = data?['value'];
                     print("Temperature updated: $_temperature");
                   }));
             }
